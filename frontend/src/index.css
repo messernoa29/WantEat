@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background-color: #FFFCF7;
+    color: #1A1A2E;
+  }
+
+  /* Range input style */
+  input[type='range'] {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    border-radius: 3px;
+    background: #E2DDD6;
+    outline: none;
+  }
+
+  input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #FF6B35;
+    cursor: pointer;
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
+  }
+
+  input[type='range']::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #FF6B35;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
+  }
+}
+
+@layer utilities {
+  .animate-ring {
+    animation: ring-fill 0.8s ease forwards;
+  }
+}
