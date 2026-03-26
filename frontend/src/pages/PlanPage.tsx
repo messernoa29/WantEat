@@ -99,8 +99,8 @@ function DayCard({ day, active, onClick }: { day: DayPlan; active: boolean; onCl
   return (
     <button
       onClick={onClick}
-      className={`flex flex-col items-center px-3 py-2 rounded-xl transition shrink-0 ${
-        active ? 'bg-primary text-white shadow-sm' : 'bg-white text-gray-500 hover:bg-warm-100 shadow-card'
+      className={`flex flex-col items-center px-3 py-2 rounded-xl transition-all duration-200 shrink-0 press ${
+        active ? 'bg-primary text-white shadow-md shadow-primary/25 scale-105' : 'bg-white text-gray-500 hover:bg-warm-100 shadow-card'
       }`}
     >
       <span className="text-xs font-medium">{DAY_NAMES[day.day_index]?.slice(0, 3)}</span>
@@ -126,9 +126,9 @@ export function PlanPage() {
   const currentDay = plan?.days?.[activeDay]
 
   return (
-    <div className="min-h-screen bg-warm text-brand">
+    <div className="min-h-screen bg-warm text-brand pb-24">
       <header className="border-b border-warm-200 bg-white px-4 py-4 flex items-center justify-between">
-        <button onClick={() => navigate('/dashboard')} className="text-gray-400 hover:text-brand transition">← Dashboard</button>
+        <div className="w-10" />
         <h1 className="font-bold text-lg">Plan 7 jours 📅</h1>
         <button
           onClick={() => generate.mutate()}
@@ -180,7 +180,7 @@ export function PlanPage() {
 
       {/* Plan prêt */}
       {plan?.status === 'ready' && plan.days.length > 0 && (
-        <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
+        <div className="max-w-2xl mx-auto px-4 py-6 space-y-6 animate-fade-in">
           {/* Sélecteur de jours */}
           <div className="flex gap-2 overflow-x-auto pb-1">
             {plan.days

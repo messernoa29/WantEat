@@ -336,6 +336,9 @@ export function OnboardingPage() {
             disabled={save.isPending}
             className="w-full bg-primary hover:bg-primary-dark text-white font-bold py-4 rounded-2xl text-lg transition disabled:opacity-50"
           >{save.isPending ? 'Enregistrement…' : "✨ C'est parti — génère mon premier plan"}</button>
+          <button onClick={() => navigate('/dashboard')}
+            className="w-full text-sm text-gray-400 hover:text-gray-600 transition py-2"
+          >Accéder au dashboard sans générer de plan</button>
         </div>
       </div>
     )

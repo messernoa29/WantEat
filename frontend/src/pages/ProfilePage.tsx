@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useProfile, useSaveProfile } from '../hooks/useProfile'
 import { useAuth } from '../hooks/useAuth'
 
@@ -26,7 +25,6 @@ const COOKING = [
 ]
 
 export function ProfilePage() {
-  const navigate = useNavigate()
   const { user } = useAuth()
   const { data: profile, isLoading } = useProfile()
   const save = useSaveProfile()
@@ -92,13 +90,9 @@ export function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-warm text-brand">
-      <header className="border-b border-warm-200 bg-white px-4 py-4 flex items-center justify-between">
-        <button onClick={() => navigate('/dashboard')} className="text-gray-400 hover:text-brand transition">
-          ← Dashboard
-        </button>
-        <h1 className="font-bold text-lg">Mon profil</h1>
-        <div className="w-20" />
+    <div className="min-h-screen bg-warm text-brand pb-24">
+      <header className="border-b border-warm-200 bg-white px-4 py-4 flex items-center justify-center">
+        <h1 className="font-bold text-lg">Mon profil 👤</h1>
       </header>
 
       <div className="max-w-lg mx-auto px-4 py-8 space-y-6">

@@ -71,11 +71,9 @@ export function CalendarPage() {
   const totalProtein = slots?.reduce((sum, s) => sum + (s.recipe?.protein ?? 0), 0) ?? 0
 
   return (
-    <div className="min-h-screen bg-warm text-brand">
+    <div className="min-h-screen bg-warm text-brand pb-24">
       <header className="border-b border-warm-200 bg-white px-4 py-4 flex items-center justify-between">
-        <button onClick={() => navigate('/dashboard')} className="text-gray-400 hover:text-brand transition">
-          ← Dashboard
-        </button>
+        <div className="w-10" />
         <h1 className="font-bold text-lg">Calendrier semaine 📅</h1>
         <button
           onClick={() => navigate('/library')}
@@ -105,7 +103,7 @@ export function CalendarPage() {
           <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
         </div>
       ) : (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto animate-fade-in">
           <div style={{ minWidth: 700 }} className="px-4 py-4">
             {/* Header row */}
             <div className="grid gap-2 mb-2" style={{ gridTemplateColumns: '90px repeat(7, 1fr)' }}>
