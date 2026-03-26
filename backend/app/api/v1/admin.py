@@ -9,6 +9,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from fastapi.responses import StreamingResponse
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy import func, select
+from sqlalchemy.orm import selectinload
 
 from app.core.security import decode_supabase_jwt
 from app.db.models.library import Recipe, RecipeSave
@@ -141,7 +142,11 @@ async def admin_create_recipe(data: RecipeCreate, admin: AdminDep, db: DBDep):
 
 @router.get("/recipes/{recipe_id}", response_model=RecipeDetail)
 async def admin_get_recipe(recipe_id: uuid.UUID, admin: AdminDep, db: DBDep):
-    result = await db.execute(select(Recipe).where(Recipe.id == recipe_id))
+    result = await db.execute(
+        select(Recipe)
+        .where(Recipe.id == recipe_id)
+        .options(selectinload(Recipe.subcategory))
+    )
     recipe = result.scalar_one_or_none()
     if not recipe:
         raise HTTPException(status_code=404, detail="Recette introuvable")
