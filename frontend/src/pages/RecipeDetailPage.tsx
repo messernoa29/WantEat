@@ -88,7 +88,7 @@ export function RecipeDetailPage() {
   const [selectedDay, setSelectedDay] = useState(0)
   const [selectedMeal, setSelectedMeal] = useState('déjeuner')
   const [checkedIngredients, setCheckedIngredients] = useState<Set<number>>(new Set())
-  const [showTikTok, setShowTikTok] = useState(false)
+  const [showTikTok, setShowTikTok] = useState(true)
 
   const toggleIngredient = (i: number) => {
     setCheckedIngredients(prev => {
@@ -146,32 +146,47 @@ export function RecipeDetailPage() {
 
       <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
 
-        {/* HERO IMAGE */}
-        <div className="rounded-2xl overflow-hidden aspect-video bg-warm-200 relative">
-          {recipe.image_urls.length > 0 ? (
-            <img src={recipe.image_urls[0]} alt={recipe.name} className="w-full h-full object-cover" />
-          ) : (
-            <div className="flex flex-col items-center justify-center h-full gap-3 text-gray-400">
-              <span className="text-6xl">🍽️</span>
-              <p className="text-sm">Pas encore de photo</p>
+        {/* HERO : TikTok embed ou image de fallback */}
+        {tikTokId ? (
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-xs text-gray-400 uppercase tracking-wide font-semibold">Vidéo de la recette</p>
+              <button
+                onClick={() => setShowTikTok(v => !v)}
+                className="text-xs text-gray-400 hover:text-primary transition"
+              >
+                {showTikTok ? 'Masquer' : '▶ Afficher'}
+              </button>
             </div>
-          )}
-
-          {/* TikTok play button overlay */}
-          {tikTokId && !showTikTok && (
-            <button
-              onClick={() => setShowTikTok(true)}
-              className="absolute bottom-3 right-3 bg-black/70 text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 hover:bg-black/90 transition"
-            >
-              ▶ Voir la vidéo
-            </button>
-          )}
-        </div>
+            {showTikTok && (
+              <div className="rounded-2xl overflow-hidden bg-black">
+                <iframe
+                  src={`https://www.tiktok.com/embed/v2/${tikTokId}`}
+                  className="w-full"
+                  style={{ height: 560, border: 'none' }}
+                  allowFullScreen
+                  allow="encrypted-media"
+                />
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="rounded-2xl overflow-hidden aspect-video bg-warm-200">
+            {recipe.image_urls.length > 0 ? (
+              <img src={recipe.image_urls[0]} alt={recipe.name} className="w-full h-full object-cover" />
+            ) : (
+              <div className="flex flex-col items-center justify-center h-full gap-3 text-gray-400">
+                <span className="text-6xl">🍽️</span>
+                <p className="text-sm">Pas encore de photo</p>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* CREATOR BADGE */}
         {recipe.creator_handle && (
           <a
-            href={`https://www.tiktok.com/${recipe.creator_handle}`}
+            href={recipe.tiktok_url || `https://www.tiktok.com/${recipe.creator_handle}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-3 bg-white rounded-2xl p-3 shadow-card hover:bg-warm-50 transition"
@@ -179,29 +194,10 @@ export function RecipeDetailPage() {
             <span className="text-2xl">🎵</span>
             <div>
               <p className="font-semibold text-sm text-brand">{recipe.creator_name || recipe.creator_handle}</p>
-              <p className="text-xs text-primary">{recipe.creator_handle} · Voir sur TikTok</p>
+              <p className="text-xs text-primary">{recipe.creator_handle} · Voir la vidéo sur TikTok</p>
             </div>
             <span className="ml-auto text-gray-300">›</span>
           </a>
-        )}
-
-        {/* TIKTOK EMBED */}
-        {tikTokId && showTikTok && (
-          <div>
-            <div className="flex items-center justify-between mb-2">
-              <p className="text-xs text-gray-400 uppercase tracking-wide font-semibold">Vidéo originale</p>
-              <button onClick={() => setShowTikTok(false)} className="text-xs text-gray-400 hover:text-primary">Masquer</button>
-            </div>
-            <div className="rounded-2xl overflow-hidden">
-              <iframe
-                src={`https://www.tiktok.com/embed/v2/${tikTokId}`}
-                className="w-full"
-                style={{ height: 500, border: 'none' }}
-                allowFullScreen
-                allow="encrypted-media"
-              />
-            </div>
-          </div>
         )}
 
         {/* TAGS */}

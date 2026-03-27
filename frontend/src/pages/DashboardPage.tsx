@@ -274,7 +274,7 @@ export function DashboardPage() {
           </div>
 
           {/* Calorie ring + macros */}
-          {macros && (
+          {macros ? (
             <div className="flex items-center justify-around">
               <CalorieMain consumed={calConsumed} target={todayCalories ?? calTarget} />
               <div className="flex gap-3">
@@ -283,6 +283,14 @@ export function DashboardPage() {
                 <MacroRing label="Lip." value={tracker?.fat_consumed ?? 0} max={macros.fat_g} color="#06D6A0" unit="g" delay={300} />
               </div>
             </div>
+          ) : (
+            <button
+              onClick={() => navigate('/onboarding')}
+              className="w-full bg-white/10 hover:bg-white/20 border border-white/20 rounded-2xl px-4 py-4 text-left transition animate-slide-up"
+            >
+              <p className="text-white font-semibold text-sm">📊 Configure ton profil</p>
+              <p className="text-white/60 text-xs mt-0.5">Pour voir tes macros et calories personnalisées →</p>
+            </button>
           )}
         </div>
       </div>
